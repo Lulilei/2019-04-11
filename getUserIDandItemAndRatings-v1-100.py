@@ -57,8 +57,8 @@ def genRandItemID():
 	return itemID
 
 # input:dataset of ratings.txt, itemID (type:str)
-# output:the list of UserID, rated Items and ratings for all users satisfying the required conditions
-def getUAndIAndRList(txtName, itemID, wFileTxt2):
+# output:a list file with userID, rated itemID and ratings from all users who rated itemID and the number of total rating items is bigger than 3
+def getUAndIAndRList(txtName, itemID, wFileTxt):
 	numOfRatedItems=countRatedItems(txtName)
 	
 	totalUserNum=49291
@@ -83,38 +83,26 @@ def getUAndIAndRList(txtName, itemID, wFileTxt2):
 	#print len(userInfoList), len(itemIDInfoList)
 	
 	# save the result to two .txt files:
-	#wFileTxt1 = 'userInfoList.txt'
-	'''
-	with open(wFileTxt1,'w') as fw:
-		for i in range(len(userInfoList)):
-			if userInfoList[i] != []:
-				fw.write(str(userInfoList[i]))
-				fw.write('\n')
-	'''
-	#wFileTxt2 = 'itemIDInfoList.txt'
-	with open(wFileTxt2,'w') as fw:
+	#wFileTxt = 'itemIDInfoList[i].txt', i is variable
+	with open(wFileTxt,'w') as fw:
 		for i in range(len(itemIDInfoList)):
 			if itemIDInfoList[i] != []:
 				fw.write(str(itemIDInfoList[i]))
 				fw.write('\n')
-		
 	#return userInfoList, itemIDInfoList
 	
 # test the def function:
 if __name__=="__main__":
-	'''
-	# test
-	txtName='D:/data2.txt'
-	itemID='10'
-	'''
 	txtName = 'data/ratings.txt'
 	#numOfRatedItems = countRatedItems(txtName)
 	
 	# test 10 times
-	itemID = [[] for i in range(200)]
-	wFileTxt = [[] for i in range(200)]
+	itemID = [[] for i in range(100)]  # save the selected itemID for 100 times
+	wFileTxt = [[] for i in range(100)] # save 100 different file names
 	
-	for i in range(1):
+	# produce 100 different itemIDs as the input parameters of getUAndIAndRList function
+	# in order to further get common rated itemInfo files for 100 times
+	for i in range(100):
 		wFileTxt[i] = 'itemInfoList' + str(i) + '.txt'		
 		temp = genRandItemID()
 		if temp not in itemID:
